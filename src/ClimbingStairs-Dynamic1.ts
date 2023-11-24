@@ -29,6 +29,9 @@ function climbStairs(n: number): number {
 
 };
 
+
+/// the intuition in Dynamic prog is that try to divide the problem into sub problem
+/// through recursion and try to memoize the the parts of the recursion
 const countStairs = (currStairNo: number, dict: Dict): number => {
     if (currStairNo === 2) {
         return 2
