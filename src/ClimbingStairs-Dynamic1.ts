@@ -23,6 +23,7 @@
 interface Dict {
     [key: string]: number;
 }
+
 function climbStairs(n: number): number {
     const hashMap: Dict = {}
     return countStairs(n, hashMap)
