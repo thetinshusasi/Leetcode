@@ -26,8 +26,19 @@
 // 1 <= m, n <= 100
 
 
+/// Intuition 1
+/// the no of ways i can reach i:jth cell =  no of ways i can reach i-1:jth cell +  no of ways i can reach i:j-1th cell
+/// You can  think it both approaches , top down and bottom up approach
+/// url : https://www.youtube.com/watch?v=iOeoZbHxQqI&t=313s
+/// Time complexity is O(mxn)
+/// Space complexity is O(mxn) : can be decrease the space complexity to o(m+n)
+
+
+
 function uniquePaths(m: number, n: number): number {
     const dict: Dict = {}
+
+
     for (let i = 0; i < m; i++) {
         const point = `${i}-0`
         dict[point] = 1
