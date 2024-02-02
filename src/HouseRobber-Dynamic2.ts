@@ -24,9 +24,7 @@
 // 0 <= nums[i] <= 400
 
 
-interface Dict1 {
-    [key: string]: number;
-}
+
 
 /// Here the intuition is to find a way to decompose the problem into sub problems (very important) and memoize them
 /// I still need to understand what was the intuition behind the sub problem formulation structure
