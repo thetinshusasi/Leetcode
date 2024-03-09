@@ -57,10 +57,11 @@
 
 // Intuitions :  find the next greater array element from the current element
 
-// we are keep keeping track of the  values  that are larger than the current one 
-// so we encounter if the current element is larger than the top value in the stack
-// we will pop that element and check top of the stack till we find a larger element or the stack is empty (0 in that case) , 
-// however if its smaller than the  top element then we add the current object to the top of DisposableStack
+// we are  keeping track of the  values  that are larger than the current one 
+// so if we encounter that the current element is larger than the top value in the stack , we pop the value from stack
+
+// we will contiue popping element till  we find a larger element or the stack is empty (0 in that case) , 
+// once we find a larger element or stack is empty , we will push the current element to the stack
 
 // we don't need any elements smaller that current element in the stack as we are not going to use it
 
