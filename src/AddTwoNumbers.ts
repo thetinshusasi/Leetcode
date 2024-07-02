@@ -193,4 +193,4 @@ while (l3) {
     l3 = l3.next
 
 }
-console.log(arr)
+// console.log(arr)
