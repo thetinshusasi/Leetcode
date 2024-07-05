@@ -49,6 +49,28 @@ const noOfIslands = (grid: string[][],
 
 }
 
+const islandTraveled = (grid: string[][], hashmap: DictStringBool, rowIndex: number, colIndex: number, rowLen: number, colLen: number) => {
+    if (rowIndex < 0 || colIndex < 0 || rowIndex === rowLen || colIndex === colLen || grid[rowIndex][colIndex] === "0" || hashmap[`i-${rowIndex}-j-${colIndex}`]) {
+        return
+
+    }
+    hashmap[`i-${rowIndex}-j-${colIndex}`] = true
+
+    islandTraveled(grid, hashmap, rowIndex + 1, colIndex, rowLen, colLen)
+    islandTraveled(grid, hashmap, rowIndex - 1, colIndex, rowLen, colLen)
+
+    islandTraveled(grid, hashmap, rowIndex, colIndex + 1, rowLen, colLen)
+    islandTraveled(grid, hashmap, rowIndex, colIndex - 1, rowLen, colLen)
+
+
+
+
+
+
+}
+
+
+
 function numIslands(grid: string[][]): number {
 
     let count = 0
@@ -74,10 +96,34 @@ function numIslands(grid: string[][]): number {
 
 };
 
+
+function numIslands1(grid: string[][]): number {
+
+    let count = 0
+    let rows = grid.length
+    let cols = grid[0].length
+    let hashmap: DictStringBool = {}
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (grid[i][j] === "0" || hashmap[`i-${i}-j-${j}`]) {
+                continue
+            }
+            count++
+            islandTraveled(grid, hashmap, i, j, rows, cols)
+
+
+        }
+    }
+    return count
+
+};
+
+
 let grid1 = [
-    ["1", "1", "1"],
-    ["0", "1", "0"],
-    ["1", "1", "1"]]
+    ["1", "0", "1", "1", "1"],
+    ["1", "0", "1", "0", "1"],
+    ["1", "1", "1", "0", "1"]]
 
 
-console.log(numIslands(grid1))
+
+console.log(numIslands1(grid1))

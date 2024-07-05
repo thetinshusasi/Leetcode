@@ -101,5 +101,84 @@ function carFleet(target: number, position: number[], speed: number[]): number {
 
 
 };
-console.log(carFleet(12, [10, 8, 0, 5, 3], [2, 4, 1, 1, 3]))
-console.log(carFleet(10, [0, 4, 2], [2, 1, 3]))
+
+
+interface Cars {
+    positionFromTarget: number,
+    speed: number,
+    distanceAwayFromTarget: number
+    timeAwayFromTarget: number
+}
+
+function carFleet1(target: number, position: number[], speed: number[]): number {
+
+    let carArr: Cars[] = []
+
+    for (let i = 0; i < position.length; i++) {
+        const currCar: Cars = {
+            positionFromTarget: position[i],
+            speed: speed[i],
+            distanceAwayFromTarget: target - position[i],
+            timeAwayFromTarget: (target - position[i]) / speed[i]
+        }
+        carArr.push(currCar)
+
+    }
+
+    const sortedCarArr = carArr.sort((a, b) => b.distanceAwayFromTarget - a.distanceAwayFromTarget)
+    const timeArr = sortedCarArr.map(car => car.timeAwayFromTarget)
+    console.log(timeArr)
+    let fleet = 1
+
+
+    let i = timeArr.length - 1
+    let j = i - 1
+
+    while (i >= 0 && j >= 0) {
+
+        if (sortedCarArr[i].timeAwayFromTarget >= sortedCarArr[j].timeAwayFromTarget) {
+            sortedCarArr[j].timeAwayFromTarget = sortedCarArr[i].timeAwayFromTarget
+            i--
+            j--
+            continue
+        }
+
+        if (sortedCarArr[i].timeAwayFromTarget < sortedCarArr[j].timeAwayFromTarget) {
+            fleet++
+
+        }
+
+        i--
+        j--
+
+    }
+    return fleet
+
+
+};
+
+
+// function carFleet(target: number, position: number[], speed: number[]): number {
+//     let fleetCount = 0;
+//     let lastArrivalTime = 0;
+
+//     // Combine position and speed into a single array and sort by position in descending order
+//     const cars = position.map((pos, index) => [pos, speed[index]]);
+//     cars.sort((a, b) => b[0] - a[0]);
+
+//     // Iterate over each car's position and speed
+//     for (let [pos, spd] of cars) {
+//         const arrivalTime = (target - pos) / spd;
+//         // Check if the current car forms a new fleet
+//         if (arrivalTime > lastArrivalTime) {
+//             fleetCount++;
+//             lastArrivalTime = arrivalTime;
+//         }
+//     }
+//     return fleetCount;
+// }
+
+
+// console.log(carFleet(12, [10, 8, 0, 5, 3], [2, 4, 1, 1, 3]))
+// console.log(carFleet1(10, [0, 4, 2], [2, 1, 3]))
+console.log(carFleet1(10, [6, 8], [3, 2]))

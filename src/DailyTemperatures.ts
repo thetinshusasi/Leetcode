@@ -71,6 +71,11 @@ interface Temp {
     index: number,
     ele: number
 }
+
+interface Temp1 {
+    index: number,
+    tempVal: number
+}
 function dailyTemperatures(temperatures: number[]): number[] {
 
     const stack: Temp[] = []
@@ -110,4 +115,122 @@ function dailyTemperatures(temperatures: number[]): number[] {
     return res
 };
 
-console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73]));
+function dailyTemperatures1(temperatures: number[]): number[] {
+
+    const stack: Temp1[] = []
+
+    const len = temperatures.length
+    const res = new Array<number>(len)
+
+    for (let i = 0; i < len; i++) {
+
+
+
+        const currTemp = temperatures[i]
+        if (!stack.length) {
+            stack.unshift({
+                index: i,
+                tempVal: currTemp
+            })
+            continue
+        }
+
+        const stackTop = stack[0]
+
+        if (currTemp > stackTop.tempVal) {
+            while (stack.length) {
+                const topObj = stack[0]
+                if (topObj.tempVal < currTemp) {
+
+
+                    res[topObj.index] = i - topObj.index
+                    stack.shift()
+                    continue
+
+                }
+                break
+
+
+            }
+            stack.unshift({
+                index: i,
+                tempVal: currTemp
+            })
+            continue
+
+        }
+
+
+
+        stack.unshift({
+            index: i,
+            tempVal: currTemp
+        })
+
+    }
+
+    while (stack.length) {
+        const topObj = stack[0]
+        res[topObj.index] = 0
+        stack.shift()
+    }
+
+
+    return res
+};
+
+
+
+function dailyTemperatures2(temperatures: number[]): number[] {
+
+    const stack: Temp1[] = []
+
+    const len = temperatures.length
+    const res = new Array<number>(len)
+
+    for (let i = len - 1; i >= 0; i--) {
+        const currObj: Temp1 = {
+            index: i,
+            tempVal: temperatures[i]
+        }
+
+        if (!stack.length) {
+            res[i] = 0
+            stack.unshift(currObj)
+            continue
+        }
+        let inserted = false
+        while (stack.length) {
+            const topObj = stack[0]
+            if (currObj.tempVal < topObj.tempVal) {
+                res[currObj.index] = topObj.index - currObj.index
+                inserted = true
+                stack.unshift(currObj)
+                break
+            }
+            stack.shift()
+            continue
+
+
+
+        }
+
+        if (!inserted) {
+            res[currObj.index] = 0
+            stack.unshift(currObj)
+
+
+        }
+
+
+
+
+    }
+
+    return res
+};
+
+
+
+
+console.log(dailyTemperatures2([73, 74, 75, 71, 69, 72, 76, 73]));
