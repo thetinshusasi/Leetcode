@@ -31,6 +31,8 @@
 // 3 <= nums.length <= 3000
 // -105 <= nums[i] <= 105
 
+
+// Inituition : fixed an element  and use  two sum method  to find the other two elements
 function threeSum(nums: number[]): number[][] {
     if (!nums || nums.length < 3) {
         return []

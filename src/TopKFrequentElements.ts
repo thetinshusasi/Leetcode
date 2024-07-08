@@ -40,6 +40,8 @@ function topKFrequent(nums: number[], k: number): number[] {
 
 
     const vals = Object.entries(hashmap)
+
+
     vals.sort((a, b) => b[1] - a[1])
     const kvals: number[] = []
     for (let index = 0; index < k; index++) {
@@ -50,4 +52,4 @@ function topKFrequent(nums: number[], k: number): number[] {
 
 };
 
-console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2))
+console.log(topKFrequent([1, 2], 2))
