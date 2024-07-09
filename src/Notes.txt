@@ -1,0 +1,7 @@
+1. Sliding window
+    1.1 There are two types of sliding window:
+        1.1.1 variable window: the window is  increasing/ decreasing ( dynamic window)
+            1.1.1.1  It uses two  pointer i and j calculate the window size
+        1.1.2  Fixed window: the window is fixed size.
+    1.2 Question may contain following key words
+        1.2.1  consecutive subarray , minwindow , maximum subarray, maximum window
