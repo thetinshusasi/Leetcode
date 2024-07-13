@@ -36,80 +36,125 @@
 // return stack
 
 
+/// Using Stack
+
+// function insert(intervals: number[][], newInterval: number[]): number[][] {
+
+
+
+//     const updatedIntervels: number[][] = []
+//     let isintervelInserted = false
+//     const newIntervalStart = newInterval[0]
+//     const newIntervalEnd = newInterval[1]
+
+
+//     if (intervals.length) {
+//         intervals.forEach(item => {
+//             const currItemStart = item[0]
+//             const currItemEnd = item[1]
+
+
+//             if (!isintervelInserted && currItemStart > newIntervalStart) {
+//                 updatedIntervels.push(newInterval)
+//                 isintervelInserted = true
+
+//             }
+//             updatedIntervels.push(item)
+
+
+//         })
+
+//         if (!isintervelInserted) {
+//             updatedIntervels.push(newInterval)
+//             isintervelInserted = true
+//         }
+
+//     }
+//     else {
+//         updatedIntervels.push(newInterval)
+//         return updatedIntervels
+//     }
+
+
+
+
+//     let i = 1
+
+//     const len = updatedIntervels.length
+
+// const stack: number[][] = []
+//     stack.push(updatedIntervels[0])
+//     while (i < len) {
+
+// const top = stack.pop()
+//         if (!top) break
+
+//         const topStart = top[0]
+//         const topEnd = top[1]
+
+//         const start = updatedIntervels[i][0]
+//         const end = updatedIntervels[i][1]
+
+//         if (topEnd < start) {
+//             stack.push(top)
+//             stack.push(updatedIntervels[i])
+//             i++
+//             continue
+//         }
+//         stack.push([Math.min(topStart, start), Math.max(topEnd, end)])
+//         i++
+
+//     }
+
+//     return stack
+
+
+
+// };
+
+
+/// Intuition: push the newInterval at the correct location (sorted by start value of item) ==> this is important
+/// then use the merge intervel code
+
 function insert(intervals: number[][], newInterval: number[]): number[][] {
 
+    let index = 0
+    for (let i = 0; i < intervals.length; i++) {
+        if (intervals[i][0] > newInterval[0]) {
 
-
-    const updatedIntervels: number[][] = []
-    let isintervelInserted = false
-    const newIntervalStart = newInterval[0]
-    const newIntervalEnd = newInterval[1]
-
-
-    if (intervals.length) {
-        intervals.forEach(item => {
-            const currItemStart = item[0]
-            const currItemEnd = item[1]
-
-
-            if (!isintervelInserted && currItemStart > newIntervalStart) {
-                updatedIntervels.push(newInterval)
-                isintervelInserted = true
-
-            }
-            updatedIntervels.push(item)
-
-
-        })
-
-        if (!isintervelInserted) {
-            updatedIntervels.push(newInterval)
-            isintervelInserted = true
+            break
         }
-
+        index++
     }
-    else {
-        updatedIntervels.push(newInterval)
-        return updatedIntervels
-    }
+    intervals.splice(index, 0, newInterval)
 
+    if (intervals.length == 1) return intervals
 
+    let i = 0
+    let j = 1
 
+    while (j < intervals.length) {
 
-    let i = 1
+        const leftEnd = intervals[i][1]
 
-    const len = updatedIntervels.length
+        const rightStart = intervals[j][0]
 
-    const stack: number[][] = []
-    stack.push(updatedIntervels[0])
-    while (i < len) {
+        if (leftEnd >= rightStart) {
 
-        const top = stack.pop()
-        if (!top) break
-
-        const topStart = top[0]
-        const topEnd = top[1]
-
-        const start = updatedIntervels[i][0]
-        const end = updatedIntervels[i][1]
-
-        if (topEnd < start) {
-            stack.push(top)
-            stack.push(updatedIntervels[i])
-            i++
+            const newInterval = [intervals[i][0], Math.max(intervals[i][1], intervals[j][1])]
+            intervals.splice(i, 2, newInterval)
             continue
         }
-        stack.push([Math.min(topStart, start), Math.max(topEnd, end)])
+
         i++
+        j++
 
     }
-
-    return stack
-
-
+    return intervals
 
 };
 
-console.log(insert([[1, 5]], [2, 7]))
+console.log(JSON.stringify(insert([[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]], [4, 8])))
 
-// console.log(insert([[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]], [4, 8]))
+console.log(JSON.stringify(insert([[1, 5]], [2, 7])))
+
