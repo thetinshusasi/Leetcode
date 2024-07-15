@@ -35,33 +35,60 @@
 
 // Edge case  : if array has only one element(return true) or array is empty(return false)
 
+// function canJump(nums: number[]): boolean {
+
+//     if (nums.length === 1) return true
+//     let jumpsRequiredToReach = 1
+//     let reachFirstIndex = false
+//     for (let i = nums.length - 2; i >= 0; i--) {
+
+//         const currElem = nums[i]
+//         if (currElem >= jumpsRequiredToReach) {
+//             jumpsRequiredToReach = 1
+//             if (i === 0) {
+//                 reachFirstIndex = true
+//             }
+//             continue
+//         }
+
+//         jumpsRequiredToReach++
+//     }
+
+//     return reachFirstIndex
+
+// };
+
+
 function canJump(nums: number[]): boolean {
-
     if (nums.length === 1) return true
-    let jumpsRequiredToReach = 1
-    let reachFirstIndex = false
-    for (let i = nums.length - 2; i >= 0; i--) {
 
-        const currElem = nums[i]
-        if (currElem >= jumpsRequiredToReach) {
-            jumpsRequiredToReach = 1
-            if (i === 0) {
-                reachFirstIndex = true
-            }
+    let minJump = 1
+    let reachedEnd = true
+
+    let i = nums.length - 2
+
+    while (i >= 0) {
+
+        if (nums[i] - minJump >= 0) {
+            reachedEnd = true
+            i--
+            minJump = 1
             continue
         }
-
-        jumpsRequiredToReach++
+        minJump++
+        reachedEnd = false
+        i--
     }
 
-    return reachFirstIndex
-
-};
+    return reachedEnd
 
 
+
+}
 
 
 console.log(canJump([2, 3, 1, 1, 4]))
+console.log(canJump([3, 2, 1, 0, 4]))
 
 
 

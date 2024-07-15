@@ -73,7 +73,7 @@
 
 // };
 
-function isNStraightHand(hand: number[], groupSize: number): boolean {
-}
+// function isNStraightHand(hand: number[], groupSize: number): boolean {
+// }
 
-console.log(isNStraightHand([2, 1, 2, 4, 1, 3, 3, 3], 2))
+// console.log(isNStraightHand([2, 1, 2, 4, 1, 3, 3, 3], 2))
