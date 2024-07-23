@@ -75,7 +75,7 @@ class RandomizedCollection {
         this.indices.get(val)?.delete(removeIndex);
         this.indices.get(lastValue)?.delete(lastIndex);
 
-
+        /// Edge case : when the last value is the same as the value to be removed
         if (removeIndex !== lastIndex) {
             this.indices.get(lastValue)?.add(removeIndex);
         }
