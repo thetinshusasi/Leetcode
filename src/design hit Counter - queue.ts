@@ -34,7 +34,7 @@
 // All the calls are being made to the system in chronological order (i.e., timestamp is monotonically increasing).
 // At most 300 calls will be made to hit and getHits.
 
-
+/// Time complexity log n
 class HitCounter {
 
     private hits: { key: number, value: number }[]
@@ -63,77 +63,9 @@ class HitCounter {
 
     }
 
-    // timecomplexity O(n) , if we are counting multiple hits at the same time as well
-    // public getHits(timestamp: number): number {
-    //     const minTime = timestamp - this.timerangeInSeconds > 0 ? timestamp - this.timerangeInSeconds : 0
-
-    //     let count = 0
-    //     let minIndexFound = false
-    //     let minIndex = -1
 
 
-    //     for (let i = 0; i < this.hits.length; i++) {
-
-
-    //         if (minIndexFound) {
-    //             count += this.hits[i].value
-    //             continue
-    //         }
-
-    //         if (this.hits[i].key >= minTime) {
-    //             minIndexFound = true
-    //             minIndex = i
-    //             count += this.hits[i].value
-    //             continue
-    //         }
-
-    //     }
-
-    //     if (minIndex !== -1) {
-    //         this.hits = this.hits.slice(minIndex)
-    //     }
-
-    //     return count
-
-
-
-    // }
-
-
-    // timecomplexity O(n) , if we are not counting multiple hits at the same time as well
-    // public getHits(timestamp: number): number {
-    //     const minTime = timestamp - this.timerangeInSeconds > 0 ? timestamp - this.timerangeInSeconds : 0
-
-    //     let count = 0
-    //     let minIndex = -1
-
-
-    //     for (let i = 0; i < this.hits.length; i++) {
-
-
-
-
-    //         if (this.hits[i].key >= minTime) {
-    //             // minIndexFound = true
-    //             minIndex = i
-    //             count = this.hits.length - i
-    //             break
-
-    //         }
-
-    //     }
-
-    //     if (minIndex !== -1) {
-    //         this.hits = this.hits.slice(minIndex)
-    //     }
-
-    //     return count
-
-
-
-    // }
-
-
+    /// Time complexity log n
     public getHits(timestamp: number): number {
         if (this.hits.length === 0) return 0
 
@@ -166,21 +98,10 @@ class HitCounter {
 }
 
 
-const hitCounter = new HitCounter(300)
-hitCounter.hit(1)
-hitCounter.hit(301)
-hitCounter.hit(302)
-hitCounter.hit(303)
-hitCounter.hit(304)
-hitCounter.hit(305)
-hitCounter.hit(305)
-
-console.log(hitCounter.getHits(604))
-console.log(hitCounter.getHits(604))
 
 
 
-
+// space complexity O(n)
 class HitCounter1 {
     bucketSize = 300;
     buckets = new Map(); // Map<bucketId, hitcounter[]>
