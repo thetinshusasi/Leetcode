@@ -100,171 +100,51 @@ class HitCounter {
 
 
 
-
-// space complexity O(n)
-class HitCounter1 {
-    bucketSize = 300;
-    buckets = new Map(); // Map<bucketId, hitcounter[]>
-
-    hit(timestamp: number) {
-        const bucketId = this.getBucketId(timestamp);
-        const bucket = this.buckets.get(bucketId)
-            ?? new Array(this.bucketSize).fill(0);
-        bucket[timestamp % this.bucketSize]++;
-        this.buckets.set(bucketId, bucket);
-    }
-
-    getHits(timestamp: number) {
-        let hits = 0;
-        const currBucketId = this.getBucketId(timestamp);
-        // count current bucket
-        const currBucket = this.buckets.get(currBucketId) ?? [];
-        for (let sec = 0; sec < currBucket.length && sec <= timestamp % this.bucketSize; sec++) {
-            hits += currBucket[sec];
-        }
-
-        // count prev bucket
-        const prevBucket = this.buckets.get(currBucketId - 1) ?? [];
-        for (let sec = prevBucket.length - 1; sec > timestamp % this.bucketSize; sec--) {
-            hits += prevBucket[sec];
-        }
-
-        return hits;
-    }
-
-    getBucketId(timestamp: number) {
-        return timestamp / this.bucketSize | 0;
-    }
-}
-
-
-const hitCounter1 = new HitCounter1()
-hitCounter1.hit(1)
-hitCounter1.hit(301)
-hitCounter1.hit(302)
-hitCounter1.hit(303)
-hitCounter1.hit(304)
-hitCounter1.hit(305)
-hitCounter1.hit(305)
-
-console.log(hitCounter1.getHits(604))
-console.log(hitCounter1.getHits(604))
-
-
+//space complexity O(n)
 class HitCounter2 {
-    private ranges: number[];
-
-    constructor() {
-        this.ranges = [];
-    }
-
-    hit(timestamp: number): void {
-        this.ranges.push(timestamp);
-    }
-
-    getHits(timestamp: number): number {
-        const target = timestamp - 300;
-        let low = -1;
-        let high = this.ranges.length - 1;
-
-        while (low < high) {
-            const mid = Math.ceil((low + high) / 2);
-            if (this.ranges[mid] <= target) {
-                low = mid;
-            } else {
-                high = mid - 1;
-            }
-        }
-
-        return this.ranges.length - low - 1;
-    }
-}
-
-// Example usage:
-const hitCounter2 = new HitCounter2();
-hitCounter2.hit(1);
-hitCounter2.hit(2);
-hitCounter2.hit(3);
-console.log(hitCounter2.getHits(4)); // Output: 3
-hitCounter2.hit(300);
-console.log(hitCounter2.getHits(300)); // Output: 4
-console.log(hitCounter2.getHits(301)); // Output: 3
-
-
-
-class HitCounter4 {
-    readonly hitCounterMap: Map<number, number>;
-
-    constructor() {
-        this.hitCounterMap = new Map()
-    }
-
-    hit(timestamp: number): void {
-        if (this.hitCounterMap.has(timestamp)) {
-            const currentHits: number = this.hitCounterMap.get(timestamp) || 0
-            this.hitCounterMap.set(timestamp, currentHits + 1)
-        } else {
-            this.hitCounterMap.set(timestamp, 1)
-        }
-    }
-
-    getHits(timestamp: number): number {
-        const fiveMinutesAgoTimestamp: number = timestamp - 300;
-        let numberOfHits: number = 0;
-        for (let t = timestamp; t > fiveMinutesAgoTimestamp; t--) {
-            if (this.hitCounterMap.has(t)) {
-                numberOfHits += this.hitCounterMap.get(t) || 0;
-            }
-        }
-        return numberOfHits;
-    }
-}
-
-
-class HitCounter5 {
-    private times: number[];
     private hits: number[];
+    private times: number[];
     private size: number;
+    private windowSize: number;
 
-    constructor() {
-        this.size = 300;
-        this.times = new Array(this.size).fill(0);
+    constructor(windowSize: number = 300) {
+        // Number of slots in the circular buffer, here it's equal to the window size (e.g., 300 seconds for 5 minutes)
+        this.windowSize = windowSize;
+        this.size = windowSize;
         this.hits = new Array(this.size).fill(0);
+        this.times = new Array(this.size).fill(0);
     }
 
+    // Record a hit at a given timestamp
     hit(timestamp: number): void {
         const index = timestamp % this.size;
+
+        // If the time at this index is different, it means we've wrapped around, so reset
         if (this.times[index] !== timestamp) {
-            // New timestamp, reset the slot
             this.times[index] = timestamp;
             this.hits[index] = 1;
         } else {
-            // Existing timestamp, increment the hit count
+            // Otherwise, increment the hit count at this index
             this.hits[index]++;
         }
     }
 
+    // Get the number of hits in the past 'windowSize' seconds
     getHits(timestamp: number): number {
         let totalHits = 0;
+
         for (let i = 0; i < this.size; i++) {
-            if (timestamp - this.times[i] < this.size) {
+            if (timestamp - this.times[i] < this.windowSize) {
                 totalHits += this.hits[i];
             }
         }
+
         return totalHits;
     }
 }
 
-// Example usage:?
 
-const hitCounter5 = new HitCounter5()
-hitCounter5.hit(1)
-hitCounter5.hit(301)
-hitCounter5.hit(302)
-hitCounter5.hit(303)
-hitCounter5.hit(304)
-hitCounter5.hit(305)
-hitCounter5.hit(305)
 
-console.log(hitCounter5.getHits(604))
-console.log(hitCounter5.getHits(604))
+
+
+
