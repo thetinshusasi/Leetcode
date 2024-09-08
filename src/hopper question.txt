@@ -1,0 +1,48 @@
+1. question was on recursively finding all possible paths from two places given multiple locations.
+Given two airports(departure and destination), list all possible routes user can take to reach destination. e.g.: Input: - Departure: SYD - Arrival: DPS - Routes: [SYD-KUL, KUL-SIN, SIN-BKK, KUL-DPS]
+2. calculating the stock price
+3. Given 2 sorted arrays, merge them together, eliminate duplicates, and sort the result.
+4. Sort a list of file by names, that has numbers in them. Sort a list of files like: "file1" "file10" "file2" in the correct order: String length -> Number precedence So actual list needs to be "file1" "file2" "file10" There was catch IIRC with ordering "file10" after "file2" since the nature of the numbers. But default string sort won't catch that and do the other way around. So you need to code the correct way for that. Also there is a catch right after with "file01".
+5. Some arrays manipulation
+
+1. Reconstruct itinerary (332 on Leetcode) I had 20 minutes to solve this problem...hah Design a web crawler I had 20 minutes for this problem as well
+OTS - something related to string with HTML tags and order them accordingly. Very easy think of stack
+Take a nested bulleted list, parse it and turn it into a data structure.
+
+You have a list of Passenger objects where every passenger has a name, a loyalty class (integer) and a group (string). You need to order the passengers by loyalty but higher loyalty passengers take the passengers with same group with them. So if a passenger has a lower loyalty class they still go in the order up if their group is equal to another passenger with same group but higher loyalty. So the question is to group passengers by group and order those groups by whoever has the highest loyalty within that group.
+
+Live coding required me to code a parking lot system.
+Reverse a string in place
+
+Coding a non-trivial serializer/deserializer in Python
+
+Find shortest prefix that matches a word in dictionary uniquely
+
+When a binary tree is given, print out all the Node using recursion and iteration. ==> check it out
+word search 2  ==>check
+
+Given a list of passengers with class identifiers, group them in order that they can board a plane.
+
+String manipulation problem
+
+Giving a string that contains brackets, check if the pair of brackets are balanced.
+
+
+
+
+
+
+
+
+
+
+
+
+System Design :
+ System design stage. I was asked to design a part of the Hopper functionality.
+Design a smart parking garage
+
+
+
+
+ but domain knowledge / product case studies / general dsa / algorithm to work through as a team. Focus on collaboration and communication

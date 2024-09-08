@@ -16,21 +16,47 @@
 
 // Input: prices = [1]
 // Output: 0
+// function maxProfit1(prices: number[]): number {
+//     const buy = new Array(prices.length + 2).fill(0);
+//     const sell = new Array(prices.length + 2).fill(0);
+
+//     for (let i = prices.length - 1; i >= 0; i--) {
+//         const profitFromNotBuyingToday = buy[i + 1];
+//         const profitFromBuyingToday = sell[i + 1] - prices[i];
+//         buy[i] = Math.max(profitFromNotBuyingToday, profitFromBuyingToday);
+
+//         const profitFromNotSellingToday = sell[i + 1];
+//         const profitFromSellingToday = buy[i + 2] + prices[i];
+//         sell[i] = Math.max(profitFromNotSellingToday, profitFromSellingToday);
+//     }
+
+//     return buy[0];
+// };
+
+// https://www.youtube.com/watch?v=w6xk5Po-DX0&t=359s
 function maxProfit1(prices: number[]): number {
-    const buy = new Array(prices.length + 2).fill(0);
-    const sell = new Array(prices.length + 2).fill(0);
+    if (prices.length <= 1) return 0
 
-    for (let i = prices.length - 1; i >= 0; i--) {
-        const profitFromNotBuyingToday = buy[i + 1];
-        const profitFromBuyingToday = sell[i + 1] - prices[i];
-        buy[i] = Math.max(profitFromNotBuyingToday, profitFromBuyingToday);
+    if (prices.length === 2) return Math.max(0, prices[1] - prices[0])
+    const dp = new Array(prices.length).fill(0).map(() => new Array(2).fill(0))
+    //  0 => no stock
+    //  1 => has stock
 
-        const profitFromNotSellingToday = sell[i + 1];
-        const profitFromSellingToday = buy[i + 2] + prices[i];
-        sell[i] = Math.max(profitFromNotSellingToday, profitFromSellingToday);
+    dp[0][0] = 0 // I don't have stock on day 0
+    dp[0][1] = -prices[0] // I brought stock on day 0
+    dp[1][0] = Math.max(dp[0][1] + prices[1], dp[0][0]) // I don't have stock on day 1, I either sold stock on day 1 or I didn't have stock on day 0
+    dp[1][1] = Math.max(dp[0][0] - prices[1], dp[0][1]) // I have stock on day 1, I either bought stock on day 1 or I had stock on day 0
+
+    for (let i = 2; i < prices.length; i++) {
+        dp[i][0] = Math.max(dp[i - 1][1] + prices[i], dp[i - 1][0])
+        dp[i][1] = Math.max(dp[i - 2][0] - prices[i], dp[i - 1][1])
+
     }
 
-    return buy[0];
+    return dp[prices.length - 1][0]
+
+
 };
+
 
 console.log(maxProfit1([1, 2, 3, 0, 2]));

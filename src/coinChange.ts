@@ -59,5 +59,40 @@ function coinChange(coins: number[], amount: number): number {
     return minCoinArrDP[amount] === amount + 1 ? -1 : minCoinArrDP[amount]
 
 }
+function coinChange1(coins: number[], amount: number): number {
+
+    if (amount <= 0) return 0
+    coins.sort((a, b) => b - a)
+
+    const dp = new Array(amount + 1).fill(amount + 1)
+    dp[0] = 0
+
+
+    for (let i = 1; i <= amount; i++) {
+
+        let j = 0
+
+        while (j < coins.length) {
+
+            if (i - coins[j] < 0) {
+                j++
+                continue
+            }
+
+            const count = 1 + dp[i - coins[j]]
+            if (count < dp[i]) {
+                dp[i] = count
+            }
+            j++
+        }
+    }
+
+    return dp[amount] === amount + 1 ? -1 : dp[amount]
+
+}
+
+
+
+
 // console.log(coinChange([186, 419, 83, 408], 6249))
-console.log(coinChange([1, 2, 5], 11))
+console.log(coinChange1([1, 2147483647], 2))
