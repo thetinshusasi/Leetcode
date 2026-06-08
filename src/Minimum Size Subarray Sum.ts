@@ -26,47 +26,86 @@
 // 1 <= nums[i] <= 104
 
 
+// function minSubArrayLen(target: number, nums: number[]): number {
+
+//     let i = 0
+//     let j = 0
+
+//     let minWindow = Number.MAX_SAFE_INTEGER
+//     let sum = 0
+//     let isLeftIncremented = false
+
+//     while (j < nums.length) {
+
+//         if (!isLeftIncremented) {
+//             const currVal = nums[j]
+//             sum += currVal
+
+//         }
+
+
+
+//         if (sum < target) {
+//             isLeftIncremented = false
+//             j++
+//             continue
+//         }
+//         else {
+
+//             let newMinWindow = j - i + 1
+
+//             if (newMinWindow < minWindow) {
+//                 minWindow = newMinWindow
+//             }
+
+//             sum -= nums[i]
+//             i++
+//             isLeftIncremented = true
+//         }
+
+//     }
+
+//     return minWindow == Number.MAX_SAFE_INTEGER ? 0 : minWindow
+
+// };
+
+
 function minSubArrayLen(target: number, nums: number[]): number {
 
-    let i = 0
-    let j = 0
-
-    let minWindow = Number.MAX_SAFE_INTEGER
-    let sum = 0
-    let isLeftIncremented = false
-
-    while (j < nums.length) {
-
-        if (!isLeftIncremented) {
-            const currVal = nums[j]
-            sum += currVal
-
-        }
 
 
+let start = 0
+let end = 0
+let currSum = 0
+let minLen = Number.MAX_SAFE_INTEGER
+const arrLen = nums.length
 
-        if (sum < target) {
-            isLeftIncremented = false
-            j++
-            continue
-        }
-        else {
+while(end < arrLen){
+    currSum += nums[end]
 
-            let newMinWindow = j - i + 1
-
-            if (newMinWindow < minWindow) {
-                minWindow = newMinWindow
-            }
-
-            sum -= nums[i]
-            i++
-            isLeftIncremented = true
-        }
-
+    if(currSum < target){
+        end++
+        continue
     }
 
-    return minWindow == Number.MAX_SAFE_INTEGER ? 0 : minWindow
+    minLen = Math.min(minLen, end-start + 1)
 
-};
+    while(start <= end){
+        if(currSum >= target){
+             minLen = Math.min(minLen, end-start + 1)
+             currSum -= nums[start]
+             start++
+             continue
+        }
+      
+        break
+    }
+      end++
+}
 
-console.log(minSubArrayLen(7, [2, 3, 1, 2, 4, 3]))
+return minLen === Number.MAX_SAFE_INTEGER ? 0: minLen
+
+}
+
+
+console.log(minSubArrayLen(7, [2,3,1,2,4,3]))

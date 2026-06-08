@@ -60,35 +60,59 @@
 
 // };
 
+// function merge(intervals: number[][]): number[][] {
+//     if (!intervals.length) return []
+//     if (intervals.length == 1) return intervals
+
+//     intervals.sort(((a, b) => a[0] - b[0]))
+
+//     let i = 0
+//     let j = 1
+
+//     while (j < intervals.length) {
+
+//         const leftEnd = intervals[i][1]
+
+//         const rightStart = intervals[j][0]
+
+//         if (leftEnd >= rightStart) {
+
+//             const newInterval = [intervals[i][0], Math.max(intervals[i][1], intervals[j][1])]
+//             intervals.splice(i, 2, newInterval)
+//             continue
+//         }
+
+//         i++
+//         j++
+
+//     }
+//     return intervals
+
+
+// }
+
 function merge(intervals: number[][]): number[][] {
-    if (!intervals.length) return []
+     if (!intervals.length) return []
     if (intervals.length == 1) return intervals
 
-    intervals.sort(((a, b) => a[0] - b[0]))
+    intervals.sort((a,b)=>a[0]-b[0])
 
-    let i = 0
-    let j = 1
+    let start = 0
+    let end = 1
 
-    while (j < intervals.length) {
+    while(end < intervals.length){
 
-        const leftEnd = intervals[i][1]
-
-        const rightStart = intervals[j][0]
-
-        if (leftEnd >= rightStart) {
-
-            const newInterval = [intervals[i][0], Math.max(intervals[i][1], intervals[j][1])]
-            intervals.splice(i, 2, newInterval)
+        if(intervals[start][1] >= intervals[end][0]){
+            intervals[start][1] = Math.max(intervals[start][1], intervals[end][1])
+            intervals.splice(end,1)
             continue
         }
-
-        i++
-        j++
+        start++
+        end++
 
     }
-    return intervals
-
-
+    console.log(JSON.stringify( intervals))
+return intervals
 }
 
 console.log(merge([[1, 3], [2, 6], [8, 10], [15, 18]]))

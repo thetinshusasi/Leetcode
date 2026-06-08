@@ -29,23 +29,41 @@
 // Only one valid answer exists.
 
 
-function twoSum(nums: number[], target: number): number[] {
-    const hashMap: { [key: number]: number } = {}
+// function twoSum(nums: number[], target: number): number[] {
+//     const hashMap: { [key: number]: number } = {}
 
-    for (let i = 0; i < nums.length; i++) {
+//     for (let i = 0; i < nums.length; i++) {
+//         const item = nums[i]
+//         if (hashMap[item] === undefined) {
+//             hashMap[target - item] = i
+//             continue
+//         }
+//         return [hashMap[item], i]
+
+
+//     }
+
+//     return []
+
+
+// };
+
+const twoSum = (nums:number[], target: number): number[] => {
+    const hashMap = new Map<number,number>()
+
+    for(let i = 0; i<nums.length; i++){
         const item = nums[i]
-        if (hashMap[item] === undefined) {
-            hashMap[target - item] = i
+        const match = hashMap.get(item)
+        if(match === undefined){
+            hashMap.set(target - item, i)
             continue
         }
-        return [hashMap[item], i]
-
+        return [match, i]
 
     }
 
     return []
 
-
-};
+}
 
 console.log(twoSum([2, 7, 11, 15], 9))
